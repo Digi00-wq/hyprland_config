@@ -1,0 +1,7 @@
+hl.env("XCURSOR_SIZE", "24")
+hl.env("LIBVA_DRIVER_NAME", "nvidia")
+hl.env("XDG_SESSION_TYPE", "wayland")
+hl.env("GBM_BACKEND", "nvidia-drm")
+hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
+hl.env("CAELESTIA_WALLPAPERS_DIR", "/home/digi/bg")

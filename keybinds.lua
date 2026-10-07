@@ -1,21 +1,30 @@
 local mainMod = "SUPER"
 local terminal = "kitty"
-local fileManager = "dolphin"
+local fileManager = "hyprfm"
 
 -- Basis-Anwendungen & Fenstersteuerung
-hl.bind(mainMod .. " + BACKSPACE", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + W", hl.dsp.window.close())
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 -- App-Launcher & Scripte
 hl.bind("SUPER + Space", hl.dsp.exec_cmd("walker"))
-hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("flatpak run app.zen_browser.zen"))
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("firefox"))
 hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("spotify"))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("pavucontrol"))
 
 -- Waybar neu laden
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("pkill waybar && waybar"))
+
+hl.bind(
+	mainMod .. " + BACKSPACE",
+	hl.dsp.window.set_prop({
+		prop = "opaque",
+		value = "toggle",
+		window = "activewindow",
+	})
+)
 
 -- Layout (Dwindle)
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
@@ -51,8 +60,19 @@ end
 
 -- Special Workspace (Scratchpad)
 hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+hl.bind(mainMod .. " + SHIFT + S", function()
+	local window = hl.get_active_window()
 
+	if not window then
+		return
+	end
+
+	if window.workspace.name == "special:magic" then
+		hl.dispatch(hl.dsp.window.move({ workspace = "e+0" }))
+	else
+		hl.dispatch(hl.dsp.window.move({ workspace = "special:magic" }))
+	end
+end)
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))

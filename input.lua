@@ -1,7 +1,7 @@
 hl.config({
 	input = {
-		kb_layout = "us, ch",
-		kb_options = "grp:alt_space_toggle",
+		kb_layout = "ch, us",
+		kb_options = "grp:alt_space_toggle,compose:caps",
 
 		follow_mouse = 1,
 
